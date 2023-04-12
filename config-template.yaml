@@ -1,0 +1,31 @@
+forma:
+  address: 'https://1forma-host.ru'
+  user_name: 'user'
+  password: 'pasword'
+  token_valid_minutes: 5
+jobs:
+  excel_locker:
+    # Option to disable job
+    is_enabled: true
+    # Job iteration time
+    interval_seconds: 10
+    # Job Options
+    options:
+      # Address for files getting. 
+      # Response format: 
+      # [{id: 1, "file_id": 99, "columns": ["M"], "save_path": "c:\completed\тест.xlsx", "unlock_columns": ["M"]}]
+      # id - item identificator. Required
+      # file_id - source 1F file that should be handled. Required
+      # unlock_columns - list of columns that should be unlocked. Optional
+      # completed_path - path to save the handled file. Final path starts with the 'completed_folder' option
+      source_publication_alias: 'excel-file-items'
+      # Sends event after each item handled. Payload format: {"id": 1, "file_id": 99}
+      complete_publication_alias: '/complete'
+      # Folder to store completed items. Optional.
+      completed_folder: 'C:/_completed/'
+      # Items portion that should be handled for one job iteration. Should be int
+      portion: 5
+      # Static setting for columns locking. Optional and could be redefined in the 'source_publication_alias' data
+      unlock_columns: ['M']
+
+    
