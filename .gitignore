@@ -134,6 +134,7 @@ cython_debug/
 # VSCodeCounter
 .VSCodeCounter/*
 
-# temp
+# other
 temp/
 config.yaml
+completed/
