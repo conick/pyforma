@@ -1,11 +1,11 @@
-import json
+import json, os
 from contextlib import asynccontextmanager
 from datetime import datetime
 from enum import Enum
 from log import logger
 from typing import Any, Optional, Mapping, AsyncIterator, ClassVar
 
-from config.config import FormaConfig
+from config.config import FormaConfig, ROOT_DIR
 from ..base import ServiceException
 from ..http_client import HttpClient, LooseHeaders, ClientResponse
 from .api_commands import FormaApiCommander
@@ -14,7 +14,7 @@ from .exceptions import FormaAuthException
 
 class FormaService():
     publication_address: ClassVar[str] = '/app/v1.2/api/publications/action/'
-    _token_file_path: ClassVar[str] = 'temp/token.json'
+    _token_file_path: ClassVar[str] = ROOT_DIR + 'temp/token.json'
     _access_token: str = None
     _access_token_date: datetime = None
     # _refresh_token: str = None
@@ -90,7 +90,7 @@ class FormaService():
     
     def _is_auth_required(self):
         if not self._access_token:
-            return False
+            return True
         token_seconds = (datetime.utcnow() - self._access_token_date).total_seconds()
         return token_seconds > self._config.token_valid_minutes * 60
 
@@ -117,8 +117,6 @@ class FormaService():
             }, 
             "params": params
         }
-        # print(req_kwargs)
-
         if self._is_auth_required():
             await self._auth()
         try:

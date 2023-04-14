@@ -1,4 +1,4 @@
-from aiohttp import ClientTimeout, ClientResponse, request
+from aiohttp import ClientSession, ClientTimeout, ClientResponse, TCPConnector, request
 from aiohttp.typedefs import StrOrURL, LooseHeaders, LooseCookies
 from aiohttp.helpers import BasicAuth, sentinel
 from contextlib import asynccontextmanager
@@ -30,18 +30,19 @@ class HttpClient():
         if not timeout:
             timeout = DEFAULT_TIMEOT
         try:
-            async with request(
-                method, 
-                url = url,
-                data = data,
-                json = json,
-                headers = headers,
-                params = params,
-                cookies = cookies,
-                allow_redirects = allow_redirects,
-                auth = auth,
-                timeout = timeout
-            ) as resp:
-                yield resp
+            async with ClientSession(connector=TCPConnector(ssl=False)) as session:
+                async with session.request(
+                    method, 
+                    url = url,
+                    data = data,
+                    json = json,
+                    headers = headers,
+                    params = params,
+                    cookies = cookies,
+                    allow_redirects = allow_redirects,
+                    auth = auth,
+                    timeout = timeout
+                ) as resp:
+                    yield resp
         finally:
             pass

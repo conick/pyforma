@@ -4,6 +4,10 @@ from pydantic.env_settings import BaseSettings, SettingsSourceCallable
 from typing import Optional
 from yaml_settings_pydantic import create_yaml_settings
 
+ROOT_DIR = os.path.abspath(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+) + '/'
+
 class JobConfig(BaseSettings):
     interval_seconds: int
     is_enabled: bool = True
@@ -34,7 +38,7 @@ class Config(BaseSettings):
 
     class Config :
         env_settings_yaml = create_yaml_settings(
-            os.path.dirname(os.path.realpath(__file__)) + '/../../config.yaml'
+            ROOT_DIR + '../config.yaml'
         )
 
         @classmethod

@@ -2,7 +2,7 @@ import os, shutil, json
 from pydantic import BaseModel
 
 from log import logger
-from config import JobExcelLockerOptions
+from config import JobExcelLockerOptions, ROOT_DIR
 from services.forma import FormaService
 from services.excel_manager import ExcelManager
 from typing import ClassVar, Optional, Any
@@ -41,7 +41,7 @@ class FtelItem(BaseModel):
 class FormaTaskExcelLockerJob(IJob):
     """ Lock excel cells """
 
-    _temp_folder: ClassVar[str] = 'temp/fttel/'
+    _temp_folder: ClassVar[str] = ROOT_DIR + 'temp/fttel/'
     _forma: FormaService = None
     _config: JobExcelLockerOptions
 
