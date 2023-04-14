@@ -4,8 +4,6 @@ Requirements
 
 * Python 3.9+
 
-See config.yaml
-
 ## Setup
 
 Open cli and go to folder what shoud store pyforma project
@@ -18,7 +16,7 @@ Get repo and initialize git
 
 ```git
 git clone https://github.com/conick/pyforma
-cd pyrforma
+cd pyforma
 git init
 ```
 
