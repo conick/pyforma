@@ -22,8 +22,16 @@ Install packages
 pip3 install -r requirements.txt
 ```
 
+For windows service
+
+```bash
+pip3 install pywin32
+```
+
 ## Run
 
 ```bash
 python3 main.py
 ```
+
+version: 1.0.1

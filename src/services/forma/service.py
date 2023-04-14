@@ -12,9 +12,6 @@ from .api_commands import FormaApiCommander
 from .exceptions import FormaAuthException
 
 
-
-
-
 class FormaService():
     publication_address: ClassVar[str] = '/app/v1.2/api/publications/action/'
     _token_file_path: ClassVar[str] = 'temp/token.json'
@@ -37,6 +34,9 @@ class FormaService():
 
     def _get_url(self, path):
         return  f'{self._config.address}{path}'
+    
+    def get_publication_path(self, alias: str):
+        return self.publication_address + alias
 
     async def _auth(self):
         """ Authentication """

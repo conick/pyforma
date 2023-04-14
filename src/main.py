@@ -12,7 +12,6 @@ from services.forma import FormaService
 
 config = Config()
 
-
 def setup_logger():
     logger.add(sys.stdout, format="{time} - {level} - {message}", filter="sub.module")
 
@@ -27,8 +26,7 @@ def start_jobs(scheduler: AsyncIOScheduler):
     scheduler.start()
     logger.success('JOB: all jobs started')
 
-
-if __name__ == '__main__':
+def run_app():
     scheduler = AsyncIOScheduler()
     start_jobs(scheduler)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
@@ -38,3 +36,6 @@ if __name__ == '__main__':
     except (KeyboardInterrupt, SystemExit):
         # Not strictly necessary if daemonic mode is enabled but should be done if possible
         scheduler.shutdown()
+
+if __name__ == '__main__':
+    run_app()

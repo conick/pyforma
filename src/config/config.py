@@ -1,3 +1,4 @@
+import os
 from pydantic import BaseSettings
 from pydantic.env_settings import BaseSettings, SettingsSourceCallable
 from typing import Optional
@@ -33,7 +34,7 @@ class Config(BaseSettings):
 
     class Config :
         env_settings_yaml = create_yaml_settings(
-            "../config.yaml"
+            os.path.dirname(os.path.realpath(__file__)) + '/../../config.yaml'
         )
 
         @classmethod

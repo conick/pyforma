@@ -13,7 +13,7 @@ jobs:
     options:
       # Address for files getting. 
       # Response format: 
-      # [{id: 1, "file_id": 99, "columns": ["M"], "save_path": "c:\completed\тест.xlsx", "unlock_columns": ["M"]}]
+      # [{id: 1, "file_id": 99, "save_path": "c:\completed\тест.xlsx", "unlock_columns": ["M"]}]
       # id - item identificator. Required
       # file_id - source 1F file that should be handled. Required
       # unlock_columns - list of columns that should be unlocked. Optional
