@@ -137,4 +137,4 @@ cython_debug/
 # other
 temp/
 config.yaml
-_compl/
+.completed/
