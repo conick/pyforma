@@ -60,26 +60,26 @@ class FormaTaskExcelLockerJob(IJob):
     async def run(self) -> None:
         """ Job runner """
 
-        items = await self._get_files_list()
-        a = 0
-        for item in items:
-            a = a + 1
-            if a > self._config.portion:
-                logger.info(_log_msg(f"{a}/{len(items)} items successfully handled by 'portion' option"))
-                return
-            try:
+        try:
+            items = await self._get_files_list()
+            a = 0
+            for item in items:
+                a = a + 1
+                if a > self._config.portion:
+                    logger.info(_log_msg(f"{a}/{len(items)} items successfully handled by 'portion' option"))
+                    return
                 logger.debug(_log_msg(f"Item '{a}' handling ..."))
                 await self._handle_item(item)
-            except (
-                FtelSaveFileException,
-                FtelSaveFileException,
-                FtelCompleteRequestException,
-                FtelFileDownloadException,
-                FtelDeleteTempFileException
-            ) as exc:
-                logger.error(str(exc))
-                return
-   
+        except (
+            FtelSaveFileException,
+            FtelSaveFileException,
+            FtelCompleteRequestException,
+            FtelFileDownloadException,
+            FtelDeleteTempFileException,
+            FtelReceiveListException
+        ) as exc:
+            logger.error(str(exc))
+            return
         logger.info(_log_msg(f'All {len(items)} items successfully handled'))
         
     async def _get_files_list(self) -> list[FtelItem]:

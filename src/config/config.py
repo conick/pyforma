@@ -32,7 +32,22 @@ class FormaConfig(BaseSettings):
 class JobsConfig(BaseSettings):
     excel_locker: JobExcelLockerConfig
 
+class CliLogConfig(BaseSettings):
+    is_enabled: bool = True
+    level: str = 'debug'
+
+class FileLogConfig(BaseSettings):
+    is_enabled: bool = False
+    level: str = 'info'
+    name: str = 'app.log'
+    folder: str = ROOT_DIR + '../'
+
+class LogConfig(BaseSettings):
+    cli: CliLogConfig = CliLogConfig()
+    file: FileLogConfig = FileLogConfig()
+
 class Config(BaseSettings):
+    log: LogConfig = LogConfig()
     forma: FormaConfig
     jobs: Optional[JobsConfig]
 
@@ -54,4 +69,6 @@ class Config(BaseSettings):
                 file_secret_settings,
                 cls.env_settings_yaml,
             )
+
+config = Config()
 

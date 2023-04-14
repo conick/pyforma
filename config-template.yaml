@@ -1,7 +1,22 @@
+log:
+  # CLI log settings
+  cli:
+    is_enabled: true
+    level: 'debug'
+  # File log settings
+  file:
+    is_enabled: false
+    level: 'info'
+    folder: null
+    name: 'app.log'
 forma:
+  # 1F http address
   address: 'https://1forma-host.ru'
+  # 1F user name
   user_name: 'user'
+  # 1F user password
   password: 'pasword'
+  # 1F token refresh time
   token_valid_minutes: 5
 jobs:
   excel_locker:
