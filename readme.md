@@ -8,8 +8,6 @@ See config.yaml
 
 ## Setup
 
-
-
 Open cli and go to folder what shoud store pyforma project
 
 ```bash
