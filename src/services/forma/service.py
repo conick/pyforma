@@ -54,7 +54,7 @@ class FormaService():
             },
         ) as resp:
             if not resp.ok:
-                raise FormaAuthException('FRM: Cannot auth')
+                raise FormaAuthException(f'FRM: Cannot auth. Status {str(resp.status)} returned')
             json_resp = await resp.json()
             self._set_token(
                 access_token=json_resp['data']['accessToken'],
