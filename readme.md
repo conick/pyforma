@@ -34,4 +34,4 @@ pip3 install pywin32
 python3 main.py
 ```
 
-version: 1.0.1
+version: 1.1.0
