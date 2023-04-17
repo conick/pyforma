@@ -106,6 +106,8 @@ class FormaService():
     ) -> AsyncIterator[ClientResponse]:     
         """ 1F http request wrapper """
 
+        if self._is_auth_required():
+            await self._auth()
         req_kwargs = {
             "url": self._get_url(path), 
             "method": method, 
@@ -117,8 +119,6 @@ class FormaService():
             }, 
             "params": params
         }
-        if self._is_auth_required():
-            await self._auth()
         try:
             async with HttpClient.fetch(**req_kwargs) as resp:
                 if resp.status == 401:
