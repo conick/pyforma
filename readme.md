@@ -14,7 +14,7 @@ cd /Projects
 
 Get repo and initialize git
 
-```git
+```bash
 git clone https://github.com/conick/pyforma
 cd pyforma
 git init
@@ -45,4 +45,10 @@ Copy `config-template.yaml` as `config.yaml` and setup last one
 
 ```bash
 python3 src/main.py
+```
+
+## Check version
+
+```bash
+git describe --tags
 ```
