@@ -14,7 +14,7 @@ from .exceptions import FormaAuthException
 
 class FormaService():
     publication_address: ClassVar[str] = '/app/v1.2/api/publications/action/'
-    _token_file_path: ClassVar[str] = ROOT_DIR + 'temp/token.json'
+    _token_file_path: ClassVar[str] = os.path.abspath(ROOT_DIR + 'temp/token.json')
     _access_token: str = None
     _access_token_date: datetime = None
     # _refresh_token: str = None
