@@ -1,14 +1,36 @@
 import sys
+from config import LogConfig, CliLogConfig, FileLogConfig
+
 from loguru import logger
-from config import config
 
-fmt_cli = "<level>{level: <8}</level> {message} <fg #00005f>{name}:{function} [{time:HH:mm:ss.SSS}]</fg #00005f>"
-fmt_file = "[{time:HH:mm:ss.SSS}] {level: <8} {message} - {name}:{function}"
-file_log = config.log.file.folder + config.log.file.name
-logger.remove()
 
-if config.log.cli.is_enabled:
-    logger.add(sys.stderr, level=config.log.cli.level.upper(), format=fmt_cli)
+class LoggerConfigurator():
+    
+    @classmethod
+    def configure(cls, config: LogConfig):
+        cls._delete_default()
+        if config.cli.is_enabled:
+            cls._add_cli(config.cli)
+        if config.file.is_enabled:
+            cls._add_file(config.file)
 
-if config.log.file.is_enabled:
-    logger.add(file_log, level=config.log.file.level.upper(), format=fmt_file)
+    @staticmethod
+    def _delete_default():
+        logger.remove()
+    
+    @staticmethod
+    def _add_cli(cli_config: CliLogConfig):
+        fmt_cli = "<level>{level: <8}</level> {message} <fg #00005f>{name}:{function} [{time:HH:mm:ss.SSS}]</fg #00005f>"
+        logger.add(sys.stderr, level=cli_config.level.upper(), format=fmt_cli)
+    
+    @staticmethod
+    def _add_file(file_config: FileLogConfig):
+        fmt_file = "[{time:HH:mm:ss.SSS}] {level: <8} {message} - {name}:{function}"
+        file_log = file_config.folder + file_config.name
+        logger.add(
+            file_log,
+            level = file_config.level.upper(),
+            format = fmt_file,
+            rotation = file_config.rotation,
+            retention = file_config.retention
+        )

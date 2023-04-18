@@ -1,22 +1,17 @@
 import asyncio
-import time
 import os
-import sys
-from datetime import datetime
-from loguru import logger
 
+from log import LoggerConfigurator, logger
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from config.config import Config
 from jobs.forma_task_excel_locker import FormaTaskExcelLockerJob
 from services.forma import FormaService
 
 config = Config()
+LoggerConfigurator.configure(config.log)
 
-def setup_logger():
-    logger.add(sys.stdout, format="{time} - {level} - {message}", filter="sub.module")
 
 def start_jobs(scheduler: AsyncIOScheduler):
-    
     jel_cfg = config.jobs.excel_locker
     if jel_cfg.is_enabled:
         sv_forma = FormaService(config=config.forma)

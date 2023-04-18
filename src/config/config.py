@@ -42,6 +42,8 @@ class FileLogConfig(BaseSettings):
     level: str = 'info'
     name: str = 'app.log'
     folder: str = ROOT_DIR + '../'
+    retention: str = '1 week'
+    rotation: str = '10MB'
 
 class LogConfig(BaseSettings):
     cli: CliLogConfig = CliLogConfig()
@@ -72,4 +74,3 @@ class Config(BaseSettings):
             )
 
 config = Config()
-

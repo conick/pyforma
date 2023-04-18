@@ -1,3 +1,4 @@
+# Log settings. See https://loguru.readthedocs.io/en/stable/api/logger.html
 log:
   # CLI log settings
   cli:
@@ -7,8 +8,19 @@ log:
   file:
     is_enabled: false
     level: 'info'
+    # Folder to store log file
     folder: null
+    # Log file name
     name: 'app.log'
+    # File log renetention. 
+    # Examples: "1 week, 3 days", "2 months", …
+    retention: null
+    # The rotation check is made before logging each message. If there is already an existing file with 
+    # the same name that the file to be created, then the existing file is renamed by appending the date
+    # to its basename to prevent file overwriting. 
+    # Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h", "monthly", "18:00", "sunday", "w0", "monday at 12:00", …
+    rotation: "10MB"
+# 1F settings
 forma:
   # 1F http address
   address: 'https://1forma-host.ru'
@@ -18,7 +30,9 @@ forma:
   password: 'pasword'
   # 1F token refresh time
   token_valid_minutes: 5
+# Jobs settings
 jobs:
+  # Excel Locker job settings
   excel_locker:
     # Option to disable job
     is_enabled: true
@@ -28,11 +42,11 @@ jobs:
     options:
       # Address for files getting. 
       # Response format: 
-      # [{id: 1, "file_id": 99, "save_path": "c:\completed\тест.xlsx", "unlock_columns": ["M"]}]
-      # id - item identificator. Required
-      # file_id - source 1F file that should be handled. Required
-      # unlock_columns - list of columns that should be unlocked. Optional
-      # completed_path - path to save the handled file. Final path starts with the 'completed_folder' option
+      # [{id: 1, "file_id": 99, "completed_path": "c:\completed\тест.xlsx", "unlock_columns": ["M"]}]
+      # id: Any - item identificator. Required
+      # file_id: int - source 1F file that should be handled. Required
+      # unlock_columns: list[str] - list of columns that should be unlocked. Optional
+      # completed_path: str - path to save the handled file. Final path starts with the 'completed_folder' option
       source_publication_alias: 'excel-file-items'
       # Sends event after each item handled. Payload format: {"id": 1, "file_id": 99}
       complete_publication_alias: '/complete'
@@ -42,5 +56,7 @@ jobs:
       portion: 5
       # Static setting for columns locking. Optional and could be redefined in the 'source_publication_alias' data
       unlock_columns: ['M']
+      # Should be applyed auto_filter to first row
+      auto_filter: true
 
     
