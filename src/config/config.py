@@ -19,6 +19,7 @@ class JobExcelLockerOptions(BaseSettings):
     portion: int = 5
     completed_folder: Optional[str] = None
     unlock_columns: Optional[list[str]] = None
+    auto_filter: bool = False
 
 class JobExcelLockerConfig(JobConfig):
     options: JobExcelLockerOptions

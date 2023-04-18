@@ -1,7 +1,8 @@
-import openpyxl, warnings
+import warnings
 from openpyxl import load_workbook
 from openpyxl.styles import Protection
 from openpyxl.workbook import Workbook
+from openpyxl.workbook.protection import WorkbookProtection
 # from pydantic import BaseModel
 from pydantic.dataclasses import dataclass
 from typing import Optional, Union
@@ -34,9 +35,30 @@ class ExcelManager():
         unlock_columns: Optional[list[str]],
         # unlock_cells: Optional[list[ExcelCellInterval]] = None
     ):
+        self._wb.security = WorkbookProtection(lockStructure=True, lockWindows = True)
         ws = self._wb.active
-        ws.protection.sheet = True
-        ws.protection.enable()
+        prot = ws.protection
+        prot.enabled = True
+        prot.selectLockedCells = False
+        prot.selectUnlockedCells = False
+        prot.algorithmName = None
+        prot.sheet = True
+        prot.objects = False
+        prot.insertRows = True
+        prot.insertHyperlinks = True
+        prot.autoFilter = False
+        prot.scenarios = False
+        prot.formatColumns = True
+        prot.deleteColumns = True
+        prot.insertColumns = True
+        prot.pivotTables = True
+        prot.deleteRows = True
+        prot.formatCells = True
+        prot.saltValue = None
+        prot.formatRows = True
+        prot.sort = False
+        prot.spinCount = None
+        prot.hashValue = None
 
         if unlock_columns:
             for col in unlock_columns:
@@ -55,5 +77,10 @@ class ExcelManager():
         #             # print(f'lock row - {x} column - {y}')
         #             # ws.cell(row = row, column = col).value = ' hello '
     
+    def auto_filter(self):
+        ws = self._wb.active
+        ws.auto_filter.ref = ws.dimensions
+        ws.auto_filter.enable = True
+
     def save(self):
         self._wb.save(self._file_path)

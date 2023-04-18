@@ -24,7 +24,7 @@ def start_jobs(scheduler: AsyncIOScheduler):
         scheduler.add_job(job_ftel.run, 'interval', seconds=jel_cfg.interval_seconds)
         logger.debug("JOB: 'Excel locker' started")
     scheduler.start()
-    logger.success('JOB: all jobs started')
+    logger.info('JOB: all jobs started')
 
 def run_app():
     scheduler = AsyncIOScheduler()

@@ -108,7 +108,7 @@ class FormaTaskExcelLockerJob(IJob):
         completed_path = (self._config.completed_folder or "") + item.completed_path
         saved_path = f'{self._temp_folder}{item.file_id}.xlsx'
         await self._download_file(item.file_id, saved_path)
-        self._lock_cells(saved_path, unlock_columns)
+        self._handle_excel(saved_path, unlock_columns)
         self._save_file(saved_path, completed_path)
         self._delete_temp_file(saved_path)
         await self._complete_request(item)
@@ -152,12 +152,14 @@ class FormaTaskExcelLockerJob(IJob):
                 ))
             logger.debug(_log_msg(f"Completed by 'POST {req_path}'"))
 
-    def _lock_cells(self, file_path: str, unlock_columns: Optional[list[str]]) -> None:
+    def _handle_excel(self, file_path: str, unlock_columns: Optional[list[str]]) -> None:
         """ Locking cells """
 
         try:
             em = ExcelManager(file_path)
             em.lock(unlock_columns=unlock_columns)
+            if self._config.auto_filter:
+                em.auto_filter()
             em.save()
         except Exception as exc:
             raise FtelLockException(_log_msg(f'Lock operation error: {str(exc)}'))
