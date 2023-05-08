@@ -20,12 +20,12 @@ class LoggerConfigurator():
     
     @staticmethod
     def _add_cli(cli_config: CliLogConfig):
-        fmt_cli = "<level>{level: <8}</level> {message} <fg #00005f>{name}:{function} [{time:HH:mm:ss.SSS}]</fg #00005f>"
+        fmt_cli = "<level>{level: <8}</level> {message} <fg #00005f>{name}:{function} [{time:HH:mm:ss}]</fg #00005f>"
         logger.add(sys.stderr, level=cli_config.level.upper(), format=fmt_cli)
     
     @staticmethod
     def _add_file(file_config: FileLogConfig):
-        fmt_file = "[{time:HH:mm:ss.SSS}] {level: <8} {message} - {name}:{function}"
+        fmt_file = "[{time:YYYY-MM-DD HH:mm:ss}] {level: <8} {message} - {name}:{function}"
         file_log = file_config.folder + file_config.name
         logger.add(
             file_log,
